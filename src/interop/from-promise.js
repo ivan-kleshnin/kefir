@@ -7,8 +7,10 @@ export default function fromPromise(promise) {
   let result = stream(function(emitter) {
     if (!called) {
       let onValue = function(x) {
-        emitter.emit(x)
-        emitter.end()
+        setImmediate(() => {
+          emitter.emit(x)
+          emitter.end()
+        })
       }
       let onError = function(x) {
         emitter.error(x)
